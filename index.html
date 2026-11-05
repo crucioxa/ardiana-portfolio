@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ardiana Fejzullahu | Game Developer Portfolio</title>
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -482,9 +483,9 @@
     position: absolute;
     left: 0;
     top: 0;
-    width: 26px;
-    height: 26px;
-    margin: -13px 0 0 -13px;
+    width: 20px;   /* invisible click area, a bit bigger than the star so it's still clickable */
+    height: 20px;
+    margin: -10px 0 0 -10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -497,7 +498,7 @@
     font-size: var(--size, 16px);
     line-height: 1;
     color: var(--gold);
-    text-shadow: 0 0 6px rgba(255,95,162,0.7), 0 0 2px rgba(255,255,255,0.75);
+    text-shadow: 0 0 4px rgba(255,95,162,0.55);
   }
   .floating-orb.popping {
     transition: opacity 0.22s ease;
@@ -551,7 +552,12 @@
     display: flex;
     align-items: center;
     gap: 7px;
+    /* hidden until the first star is popped */
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
+  .shard-hud.shown { opacity: 1; transform: none; }
   .shard-hud .dot {
     width: 8px;
     height: 8px;
@@ -644,8 +650,10 @@
   }
 
   .project-external {
-    margin-top: 30px;
+    margin-top: 20px;
   }
+  /* project pages end right after the prev/next links */
+  .project-page { padding-bottom: 0; }
 
   .project-nav {
     margin-top: 60px;
@@ -656,7 +664,7 @@
     gap: 16px;
     font-size: 15px;
     font-weight: 600;
-    padding-bottom: 80px;
+    padding-bottom: 40px;
   }
   .project-nav a {
     text-decoration: none;
@@ -805,7 +813,7 @@
     <a class="name" href="#" id="home-link">Ardiana Fejzullahu</a>
     <div class="nav-links">
       <a href="#work">Projects</a>
-      <a href="#about">About</a>
+      <a href="#about">About me</a>
       <a href="#education">Education</a>
       <a href="#toolkit">Skills</a>
       <a href="#contact">Contact</a>
@@ -852,7 +860,7 @@
           </div>
           <div class="level-title">Diver Game</div>
           <div class="level-genre">Gameplay Programming · Level Design · Shaders</div>
-          <div class="level-desc">This project showcases my immense dedication and work ethic.</div>
+          <div class="level-desc">Multiplayer underwater mining game. I led a team of 10 as lead designer, built most of the gameplay systems and created the entire underwater world.</div>
           <div class="level-meta">
             <span class="level-stack">Unity · C#</span>
             <span class="level-link">View project →</span>
@@ -867,7 +875,7 @@
           </div>
           <div class="level-title">Village Patch</div>
           <div class="level-genre">Level Design · Gameplay Programming · Narrative</div>
-          <div class="level-desc">Current project: a cozy farming game.</div>
+          <div class="level-desc">A cozy farming game I'm making entirely solo, with farming, fishing, crafting and animals. Aiming for a demo on Steam.</div>
           <div class="level-meta">
             <span class="level-stack">Unity · C#</span>
             <span class="level-link">View project →</span>
@@ -882,7 +890,7 @@
           </div>
           <div class="level-title">Colosseum</div>
           <div class="level-genre">Level Design · VFX · Gameplay Programming</div>
-          <div class="level-desc">A 2D combat platformer.</div>
+          <div class="level-desc">2D combat platformer with a three-phase boss fight. I did the level design and the VFX, including the slash attack and torch fire.</div>
           <div class="level-meta">
             <span class="level-stack">Unity · C#</span>
             <span class="level-link">View project →</span>
@@ -897,7 +905,7 @@
           </div>
           <div class="level-title">Left Behind</div>
           <div class="level-genre">Level Design · Narrative</div>
-          <div class="level-desc">A school project focused on level design.</div>
+          <div class="level-desc">A 50+ student project where I designed my own level, focusing on lighting, environmental storytelling and narrative space.</div>
           <div class="level-meta">
             <span class="level-stack">Unity · C#</span>
             <span class="level-link">View project →</span>
@@ -910,9 +918,9 @@
           <div class="level-art">
             <img src="images/hearthstone/cover.jpg" alt="Hearthstone recreation screenshot" loading="lazy">
           </div>
-          <div class="level-title">Hearthstone</div>
+          <div class="level-title">Hearthstone Recreation</div>
           <div class="level-genre">Gameplay Programming · Game Design · Perforce · Scrum</div>
-          <div class="level-desc">A card battle school project, focused on team working.</div>
+          <div class="level-desc">A card battler rebuilt from scratch by a team of 30+. I programmed most of the gameplay, and we organized the team with Scrum.</div>
           <div class="level-meta">
             <span class="level-stack">Unity · C#</span>
             <span class="level-link">View project →</span>
@@ -927,7 +935,7 @@
           </div>
           <div class="level-title">Toadally Lit</div>
           <div class="level-genre">Gameplay Programming · Level Design</div>
-          <div class="level-desc">My first ever project, a 2D platformer made for a school project.</div>
+          <div class="level-desc">My first Unity project: a cute but tricky 2D platformer. I did most of the gameplay programming and level design in a team of four.</div>
           <div class="level-meta">
             <span class="level-stack">Unity · C#</span>
             <span class="level-link">View project →</span>
@@ -941,7 +949,7 @@
   <!-- ===== ABOUT ===== -->
   <section id="about" class="divider">
     <div class="section-head">
-      <h2>About</h2>
+      <h2>About me</h2>
     </div>
     <div class="about-grid">
       <div>
@@ -953,7 +961,7 @@
       <div class="about-side">
         <img class="about-photo" src="images/ardiana-about.jpg" alt="Ardiana Fejzullahu" loading="lazy">
         <div class="stat-block">
-          <div class="stat"><div class="num">6</div><div class="label">Projects</div></div>
+          <div class="stat"><div class="num">Lead</div><div class="label">Designer on Diver Game, team of 10</div></div>
           <div class="stat"><div class="num">2027</div><div class="label">Graduating</div></div>
           <div class="stat"><div class="num">Unity</div><div class="label">Primary engine</div></div>
           <div class="stat"><div class="num">C#</div><div class="label">Primary language</div></div>
@@ -1069,8 +1077,7 @@
   </section>
 
   <footer>
-    &copy; 2026 Ardiana Fejzullahu<br>
-    <span style="opacity:0.7">Last updated October 23, 2026</span>
+    &copy; 2026 Ardiana Fejzullahu
   </footer>
 
 </div>
@@ -1088,6 +1095,9 @@
     </div>
     <div class="level-art large natural">
       <img src="images/diver-game/cover.jpg" alt="Diver Game cover art" loading="lazy">
+    </div>
+    <div class="project-external">
+      <a class="btn btn-ghost" href="https://deep-current-studio.itch.io/diver-game" target="_blank" rel="noopener">Play on itch.io →</a>
     </div>
     <div class="project-body">
       <p>A multiplayer underwater mining game developed as a two-month university project with a team of <span class="hl">10</span>. I was responsible for <span class="hl">project management</span> and led the team throughout development, while also working extensively on <span class="hl">gameplay programming</span> and creating the game's world from the ground up.</p>
@@ -1154,9 +1164,6 @@
       <img src="images/diver-game/1.jpg" alt="Diver Game gameplay screenshot" loading="lazy">
       <img src="images/diver-game/2.jpg" alt="Diver Game coral reef screenshot" loading="lazy">
       <img src="images/diver-game/3.jpg" alt="Diver Game shoreline environment" loading="lazy">
-    </div>
-    <div class="project-external">
-      <a class="btn btn-ghost" href="https://deep-current-studio.itch.io/diver-game" target="_blank" rel="noopener">Play on itch.io →</a>
     </div>
     <div class="project-nav">
       <span class="spacer">‹ Prev</span>
@@ -1238,7 +1245,7 @@
     </div>
     <div class="project-nav">
       <a href="#/project/colosseum">‹ Colosseum</a>
-      <a href="#/project/hearthstone">Hearthstone ›</a>
+      <a href="#/project/hearthstone">Hearthstone Recreation ›</a>
     </div>
   </section>
 
@@ -1247,7 +1254,7 @@
     <a class="back-link" href="#work">← All projects</a>
     <div class="project-head">
       <span class="level-num">2024</span>
-      <h2>Hearthstone</h2>
+      <h2>Hearthstone Recreation</h2>
       <div class="level-genre">Gameplay Programming · Game Design · Perforce · Scrum</div>
     </div>
     <div class="level-art large">
@@ -1289,7 +1296,7 @@
       <img src="images/toadally-lit/2.jpg" alt="Toadally Lit boss dialogue screenshot" loading="lazy">
     </div>
     <div class="project-nav">
-      <a href="#/project/hearthstone">‹ Hearthstone</a>
+      <a href="#/project/hearthstone">‹ Hearthstone Recreation</a>
       <span class="spacer">Next ›</span>
     </div>
   </section>
@@ -1385,59 +1392,41 @@
     hud.innerHTML = '<span class="dot"></span><span>Stars: <span id="shard-count">0</span></span>';
 
     var count = 0;
-    var maxOrbs = 9;
+    var maxOrbs = 7;
     var countEl;
     var GLYPHS = ['\u2605', '\u2726'];
 
     function rand(min, max) { return Math.random() * (max - min) + min; }
 
-    // Each star enters from a random edge, drifts across the screen on its own
-    // random path (with a gentle sideways sway), and leaves from the other side.
-    // A new random star then replaces it, so they never repeat the same spot.
+    // Each small star falls from above the screen in one straight line, at its
+    // own random angle and speed, and disappears off the bottom. A new random
+    // star then replaces it, so they never repeat the same spot.
     var stars = [];
     var MARGIN = 40;
     var slow = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function pointOnEdge(edge, W, H) {
-      if (edge === 0) return { x: -MARGIN, y: rand(0, H) };       // left
-      if (edge === 1) return { x: W + MARGIN, y: rand(0, H) };    // right
-      if (edge === 2) return { x: rand(0, W), y: -MARGIN };       // top
-      return { x: rand(0, W), y: H + MARGIN };                    // bottom
-    }
-
     function spawnOrb(startOnScreen) {
       var W = window.innerWidth, H = window.innerHeight;
-      var edge = Math.floor(rand(0, 4));
-      var opposite = [1, 0, 3, 2][edge];
-      var from = pointOnEdge(edge, W, H);
-      var to = pointOnEdge(opposite, W, H);
-      var dx = to.x - from.x, dy = to.y - from.y;
-      var len = Math.sqrt(dx * dx + dy * dy) || 1;
-      var speed = rand(22, 60) * (slow ? 0.35 : 1);   // pixels per second
+      // Each star falls in one straight line at its own angle (up to 35° off vertical)
+      var angle = rand(-35, 35) * Math.PI / 180;
+      var speed = rand(30, 70) * (slow ? 0.35 : 1);   // pixels per second
+      var vx = Math.sin(angle) * speed, vy = Math.cos(angle) * speed;
+      // Start above the screen; widen the start range so slanted stars still cover the whole width
+      var x = vx > 0 ? rand(-0.3 * W, W) : rand(0, 1.3 * W);
+      var y = -MARGIN;
+      // On first load, scatter stars down the screen so it isn't empty while new ones fall in
+      if (startOnScreen) { y = rand(0, H); x = rand(0, W); }
 
       var star = document.createElement('div');
       star.className = 'floating-orb';
       var glyph = document.createElement('span');
       glyph.className = 'glyph';
       glyph.textContent = GLYPHS[Math.floor(rand(0, GLYPHS.length))];
-      glyph.style.fontSize = rand(12, 22) + 'px';
+      glyph.style.fontSize = rand(6, 11) + 'px';
       star.appendChild(glyph);
-      star.style.opacity = rand(0.6, 1);
+      star.style.opacity = rand(0.5, 0.9);
 
-      var s = {
-        el: star,
-        x: from.x, y: from.y,
-        vx: dx / len * speed, vy: dy / len * speed,
-        nx: -dy / len, ny: dx / len,               // sideways direction for the sway
-        swayAmp: rand(6, 28), swayFreq: rand(0.3, 0.9), phase: rand(0, Math.PI * 2),
-        spin: rand(-40, 40), t: 0
-      };
-      // On first load, scatter some stars partway along their path so the
-      // screen isn't empty while the first ones fly in.
-      if (startOnScreen) {
-        var f = rand(0.15, 0.85);
-        s.x += dx * f; s.y += dy * f;
-      }
+      var s = { el: star, x: x, y: y, vx: vx, vy: vy };
       star.addEventListener('click', function (e) { popStar(s, e.clientX, e.clientY); });
       layer.appendChild(star);
       stars.push(s);
@@ -1445,9 +1434,7 @@
     }
 
     function place(s) {
-      var sway = Math.sin(s.phase + s.t * s.swayFreq * Math.PI * 2) * s.swayAmp;
-      var x = s.x + s.nx * sway, y = s.y + s.ny * sway;
-      s.el.style.transform = 'translate(' + x + 'px,' + y + 'px) rotate(' + (s.t * s.spin) + 'deg)';
+      s.el.style.transform = 'translate(' + s.x + 'px,' + s.y + 'px)';
     }
 
     function removeStar(s, respawn) {
@@ -1466,12 +1453,12 @@
       for (var i = stars.length - 1; i >= 0; i--) {
         var s = stars[i];
         if (s.popped) continue;
-        s.t += dt;
         s.x += s.vx * dt;
         s.y += s.vy * dt;
         place(s);
         var pad = MARGIN + 40;
-        if (s.x < -pad || s.x > W + pad || s.y < -pad || s.y > H + pad) removeStar(s, true);
+        var goneSideways = (s.x < -pad && s.vx <= 0) || (s.x > W + pad && s.vx >= 0);
+        if (s.y > H + pad || goneSideways) removeStar(s, true);
       }
       requestAnimationFrame(tick);
     }
@@ -1481,6 +1468,7 @@
       s.popped = true;
       count++;
       if (countEl) { countEl.textContent = count; }
+      hud.classList.add('shown');
 
       var px = clientX;   // layer is fixed to the screen, so screen coords are enough
       var py = clientY;
