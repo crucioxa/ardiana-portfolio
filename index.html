@@ -652,6 +652,17 @@
   .project-external {
     margin-top: 20px;
   }
+  .project-video {
+    display: block;
+    width: 100%;
+    max-width: 640px;
+    aspect-ratio: 16/9;
+    margin: 28px auto 0;
+    border-radius: 12px;
+    border: 1px solid var(--line-soft);
+    background: #000;
+    object-fit: cover;
+  }
   /* project pages end right after the prev/next links */
   .project-page { padding-bottom: 0; }
 
@@ -1102,6 +1113,8 @@
     <div class="project-body">
       <p>A multiplayer underwater mining game developed as a two-month university project with a team of <span class="hl">10</span>. I was responsible for <span class="hl">project management</span> and led the team throughout development, while also working extensively on <span class="hl">gameplay programming</span> and creating the game's world from the ground up.</p>
     </div>
+    <!-- Silent looping trailer; the video file only loads once this page is opened -->
+    <video class="project-video" data-src="videos/diver-game-trailer.mp4" poster="images/diver-game/trailer-poster.jpg" muted loop playsinline preload="none" aria-label="Diver Game trailer"></video>
     <div class="contribution-detail">
       <h3>My Contribution</h3>
 
@@ -1161,7 +1174,6 @@
       </div>
     </div>
     <div class="project-gallery">
-      <img src="images/diver-game/1.jpg" alt="Diver Game gameplay screenshot" loading="lazy">
       <img src="images/diver-game/2.jpg" alt="Diver Game coral reef screenshot" loading="lazy">
       <img src="images/diver-game/3.jpg" alt="Diver Game shoreline environment" loading="lazy">
     </div>
@@ -1307,6 +1319,7 @@
   function showHome(scrollTargetId) {
     document.getElementById('view-home').style.display = '';
     document.getElementById('view-project').style.display = 'none';
+    pauseVideos();
     if (scrollTargetId) {
       var el = document.getElementById(scrollTargetId);
       if (el) { requestAnimationFrame(function () { el.scrollIntoView(); }); }
@@ -1325,6 +1338,19 @@
       pages[i].style.display = (pages[i] === target) ? '' : 'none';
     }
     window.scrollTo(0, 0);
+    pauseVideos();
+    // Load and start this project's trailer only when its page is opened
+    var vids = target.querySelectorAll('video[data-src]');
+    for (var v = 0; v < vids.length; v++) {
+      if (!vids[v].getAttribute('src')) vids[v].src = vids[v].getAttribute('data-src');
+      var p = vids[v].play();
+      if (p && p.catch) p.catch(function () {});
+    }
+  }
+
+  function pauseVideos() {
+    var all = document.querySelectorAll('video');
+    for (var i = 0; i < all.length; i++) all[i].pause();
   }
 
   function route() {
