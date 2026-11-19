@@ -7,7 +7,7 @@
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #170f1b;
@@ -812,6 +812,71 @@
     left: 0;
     color: var(--gold);
   }
+
+  /* ---------- code highlights ---------- */
+  .code-highlights { margin-top: 28px; }
+  .code-highlights > h5 { margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; color: var(--text); }
+  .code-intro { margin: 8px 0 24px; color: var(--text-muted); font-size: 15px; }
+  .code-card {
+    background: var(--bg-panel);
+    backdrop-filter: blur(18px);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 20px;
+  }
+  .code-card header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .code-fn {
+    font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .code-tag {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 4px 12px;
+    white-space: nowrap;
+  }
+  .code-card p {
+    margin: 10px 0 16px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+  .code-card pre {
+    margin: 0;
+    padding: 18px 20px;
+    background: #120b16;
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    color: #e9dfe6;
+    tab-size: 4;
+  }
+  @media (max-width: 600px) {
+    .code-card { padding: 16px; }
+    .code-card pre { font-size: 12px; padding: 14px; }
+  }
+  /* syntax colors */
+  .tok-kw  { color: #ff7cb5; }
+  .tok-ty  { color: #d9a8f0; }
+  .tok-fn  { color: #8fd3ff; }
+  .tok-str { color: #ffd38a; }
+  .tok-num { color: #ffb38a; }
+  .tok-com { color: #8a7186; font-style: italic; }
 </style>
 </head>
 <body>
@@ -1127,52 +1192,155 @@
           <li>Created the goggles and depth system, connecting depth restrictions with oxygen, upgrades, UI feedback and gameplay progression.</li>
           <li>Implemented the selling system, upgrade functionality, state-based functionality and systems for tracking equipment and tool levels.</li>
         </ul>
+      <div class="code-highlights">
+        <h5>Code highlights</h5>
+        <p class="code-intro">A few of the functions I wrote, lightly trimmed for reading.</p>
+  
+        <article class="code-card">
+          <header>
+            <span class="code-fn">WalkingState.Update()</span>
+            <span class="code-tag">State machine</span>
+          </header>
+          <p>Each frame, switches between walking and running, handles jumping, and moves the player into the right next state: idle on land, idle in water, or swimming.</p>
+<script type="text/plain" class="code-src">public override void Update()
+{
+    bool isRunning = sm.InputManager.playerControls.Player.Sprint.IsPressed();
+    sm.SetAnimationBool("OnEnterRunning", isRunning);
+    sm.SetAnimationBool("OnEnterWalking", !isRunning);
+
+    if (sm.InputManager.playerControls.Player.Jump.triggered && sm.CanJump())
+    {
+        if (sm.Player.isSwimming || !sm.Player.IsGrounded()) return;
+        sm.SetAnimationTrigger("OnEnterJump");
+        sm.RegisterJump();
+    }
+
+    bool moving = sm.InputManager.playerControls.Player.Movement.IsPressed();
+
+    if (!moving)                                         // stopped: idle on land or in water
+        sm.ChangeState(sm.Player.isSwimming ? StateMachine.PlayerState.IdleWater
+                                            : StateMachine.PlayerState.Idle);
+    else if (sm.Player.isSwimming)                       // entered water: start swimming
+        sm.ChangeState(StateMachine.PlayerState.Swiming);
+}</script>
+        </article>
+  
+        <article class="code-card">
+          <header>
+            <span class="code-fn">GogglesTrigger.OnTriggerEnter()</span>
+            <span class="code-tag">Depth &amp; oxygen</span>
+          </header>
+          <p>Depth limits without invisible walls. Without good enough goggles, the player's air drops to 10 seconds and their vision starts to blur, so they turn back on their own.</p>
+<script type="text/plain" class="code-src">private void OnTriggerEnter(Collider other)
+{
+    if (!other.CompareTag("Player")) return;
+
+    var avatar = other.GetComponentInParent<Alteruna.Multiplayer.Avatar>();
+    if (!avatar.IsMe) return;                                 // only affect the local player
+
+    goggles = other.GetComponentInParent<Goggles>();
+    oxygen  = other.GetComponentInParent<Oxygen>();
+    if (goggles.gogglesTier >= tierRequired) return;          // good enough goggles: no effect
+
+    goggles.text.SetActive(true);                             // "you need better goggles"
+    oxygen.oxygenLevel = Mathf.Min(oxygen.oxygenLevel, 10f);  // only 10 seconds of air left
+    run = true;                                               // blur the screen while inside
+}</script>
+        </article>
+  
+        <article class="code-card">
+          <header>
+            <span class="code-fn">UpgradeManager.BuyGogglesUpgrade()</span>
+            <span class="code-tag">Upgrades</span>
+          </header>
+          <p>Each upgrade tier is set up in the editor with an ore cost, a money cost and a stat increase. Money is shared by the whole team over the network, and better goggles unlock the next depth.</p>
+<script type="text/plain" class="code-src">public void BuyGogglesUpgrade()
+{
+    if (gogglesLevel >= gogglesUpgrades.Length) { Deny(); return; }
+    UpgradeStats upgrade = gogglesUpgrades[gogglesLevel];
+
+    if (SharedMoney.Instance.money >= upgrade.moneyCost &&
+        GetOreAmount(upgrade.requiredOre) >= upgrade.oreCost)
+    {
+        SharedMoney.Instance.LocalRemoveMoney(upgrade.moneyCost);   // synced to all players
+        inventory.RemoveItem(upgrade.requiredOre, upgrade.oreCost);
+
+        goggles.gogglesTier += upgrade.valueIncrease;
+        goggles.RemoveRestriction();                                // unlock the next depth
+        gogglesLevel++;
+        soundManager.PlaySound(SoundEffect.UPGRADEITEM);
+    }
+    else Deny();
+}</script>
+        </article>
+  
+  
+        <article class="code-card">
+          <header>
+            <span class="code-fn">ShopManager.ChooseOne()</span>
+            <span class="code-tag">Selling</span>
+          </header>
+          <p>Selecting ores to sell, one click at a time. It counts the ore across every inventory stack so you can never select more than you own, and keeps a running sale price.</p>
+<script type="text/plain" class="code-src">public void ChooseOne(Inventory inventory, int slotIndex)
+{
+    if (!inventory.IsValidIndex(slotIndex)) return;
+    InventorySlot slot = inventory.InventorySlots[slotIndex];
+    if (slot.IsEmpty()) return;
+
+    InventoryItemData item = slot.itemData;
+
+    int totalOwned = 0;                                   // same ore can be in several stacks
+    foreach (var s in inventory.InventorySlots)
+        if (!s.IsEmpty() && s.itemData == item)
+            totalOwned += s.amount;
+
+    if (GetSelectedAmount(item) >= totalOwned) return;   // can't sell more than you have
+
+    selectedItems[item] = GetSelectedAmount(item) + 1;
+    TotalAmount += item.value;                            // running sale price
+    soundManager?.PlaySound(SoundEffect.MENUBUTTON);
+}</script>
+        </article>
+      </div>
       </div>
 
       <div class="contribution-group">
-        <h4>World Development</h4>
+        <h4>Optimization</h4>
         <ul>
-          <li>Created the entire underwater world, including terrain sculpting, terrain textures, custom brushes, biome layouts and asset placement.</li>
-          <li>Created the kelp models and LOD variations, optimized coral assets into terrain detail meshes and created the environmental prefabs used throughout the world.</li>
-          <li>Built and iterated on the different underwater environments, including the shore, kelp, coral, deep ocean and volcanic areas.</li>
-          <li>Created the water surface, caustics, volumetric fog, horizon fog and water refraction shaders to establish the underwater atmosphere.</li>
-          <li>Set up lighting, post-processing and local volume profiles for the different areas and depth levels of the world.</li>
+          <li>Used profiling and repeated playtesting to find performance problems and raise the game's FPS.</li>
+          <li>Cut rendering cost with <span class="hl">GPU instancing</span>, material consolidation and <span class="hl">LODs</span>, including three lower-poly versions of the kelp.</li>
+          <li>Converted environment assets into terrain details and reworked coral models in Blender, combining meshes and baking several materials into one.</li>
         </ul>
       </div>
 
       <div class="contribution-group">
         <h4>Game Design</h4>
         <ul>
-          <li>Worked as <span class="hl">Lead Designer</span> and shaped the game's overall progression, exploration and gameplay loop.</li>
-          <li>Iterated on the world and gameplay based on playtesting and feedback, adjusting environments, atmosphere, progression and player feedback.</li>
-          <li>Designed how the different biomes, minerals, depth restrictions and upgrades work together to encourage players to explore deeper.</li>
-          <li>Balanced upgrade costs, mineral values, drilling speeds, item weights and equipment progression through playtesting.</li>
-          <li>Designed the goggles and depth system as a gameplay-based progression barrier instead of using invisible walls.</li>
+          <li>Worked as <span class="hl">Lead Designer</span>, shaping the game's progression, exploration and gameplay loop.</li>
+          <li>Designed the goggles and depth system as a gameplay barrier instead of invisible walls, tying biomes, minerals and upgrades together to pull players deeper.</li>
+          <li>Balanced upgrade costs, mineral values, drilling speeds and item weights through playtesting.</li>
         </ul>
       </div>
 
       <div class="contribution-group">
-        <h4>Optimization</h4>
+        <h4>World Development</h4>
         <ul>
-          <li>Improved performance by converting environmental assets into terrain details and optimized tree-based assets with LODs.</li>
-          <li>Used profiling and repeated playtesting to identify performance problems and improve the game's FPS.</li>
-          <li>Reworked coral models in Blender by combining meshes, correcting pivots and baking multiple materials into a single material.</li>
-          <li>Created three lower-poly LOD variations for the kelp to reduce the performance cost of having large amounts of vegetation.</li>
-          <li>Used GPU instancing, material consolidation and asset optimization to reduce unnecessary rendering overhead.</li>
+          <li>Built the entire underwater world: terrain sculpting and texturing, biome layouts and asset placement across the shore, kelp, coral, deep ocean and volcanic areas.</li>
+          <li>Created the water surface, caustics, volumetric fog and refraction <span class="hl">shaders</span> that create the underwater atmosphere.</li>
+          <li>Set up lighting, post-processing and volume profiles for each area and depth.</li>
         </ul>
       </div>
 
       <div class="contribution-group">
         <h4>Project Management</h4>
         <ul>
-          <li>Led a team of <span class="hl">10</span> throughout the two-month development period and took responsibility for keeping production moving.</li>
-          <li>Coordinated the different areas of development to make sure gameplay, programming and world development came together into a finished game.</li>
-          <li>Organized daily meetings, coordinated tasks and followed up on the team's progress and deadlines.</li>
-          <li>Used an agile workflow inspired by <span class="hl">Scrum</span> to structure development and keep the project moving throughout the limited production time.</li>
-          <li>Took initiative when tasks were delayed, often stepping in to complete or fix work when there was not enough time to wait.</li>
+          <li>Led a team of <span class="hl">10</span> through a two-month production and kept it moving.</li>
+          <li>Ran daily meetings and a <span class="hl">Scrum</span>-inspired workflow to coordinate tasks and deadlines.</li>
+          <li>Stepped in to finish or fix work when tasks were delayed.</li>
         </ul>
       </div>
     </div>
+
     <div class="project-gallery">
       <img src="images/diver-game/2.jpg" alt="Diver Game coral reef screenshot" loading="lazy">
       <img src="images/diver-game/3.jpg" alt="Diver Game shoreline environment" loading="lazy">
@@ -1384,7 +1552,7 @@
     var selector = [
       '.level-card', '.section-head', '.about-grid > div', '.year-card',
       '.toolkit-group', '.contact-panel', '.project-head', '.project-body',
-      '.contribution-detail', '.project-gallery', '.project-external'
+      '.contribution-detail', '.code-card', '.project-gallery', '.project-external'
     ].join(',');
     var els = document.querySelectorAll(selector);
     els.forEach(function (el) { el.classList.add('reveal'); });
@@ -1401,12 +1569,54 @@
           obs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
 
     els.forEach(function (el) { obs.observe(el); });
   }
 
   window.addEventListener('DOMContentLoaded', initReveal);
+
+  // Turn each raw C# snippet into a colored code block
+  (function () {
+    var KEYWORDS = /^(public|private|protected|override|void|bool|int|float|var|if|else|return|foreach|in|new|null|true|false|this|is|static|class|using)$/;
+    var TOKENS = /(\/\/[^\n]*)|("(?:[^"\\]|\\.)*")|(\b\d+(?:\.\d+)?f?\b)|([A-Za-z_][A-Za-z0-9_]*)|([^A-Za-z0-9_"\/]+|\/)/g;
+
+    function esc(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function highlight(code) {
+      var out = '';
+      var m;
+      TOKENS.lastIndex = 0;
+      while ((m = TOKENS.exec(code)) !== null) {
+        if (m[1]) out += '<span class="tok-com">' + esc(m[1]) + '</span>';
+        else if (m[2]) out += '<span class="tok-str">' + esc(m[2]) + '</span>';
+        else if (m[3]) out += '<span class="tok-num">' + m[3] + '</span>';
+        else if (m[4]) {
+          var word = m[4];
+          var next = code.charAt(TOKENS.lastIndex);
+          if (KEYWORDS.test(word)) out += '<span class="tok-kw">' + word + '</span>';
+          else if (next === '(') out += '<span class="tok-fn">' + word + '</span>';
+          else if (/^[A-Z]/.test(word)) out += '<span class="tok-ty">' + word + '</span>';
+          else out += word;
+        }
+        else out += esc(m[5]);
+      }
+      return out;
+    }
+
+    window.addEventListener('DOMContentLoaded', function () {
+      var sources = document.querySelectorAll('script.code-src');
+      for (var i = 0; i < sources.length; i++) {
+        var pre = document.createElement('pre');
+        var code = document.createElement('code');
+        code.innerHTML = highlight(sources[i].textContent);
+        pre.appendChild(code);
+        sources[i].parentNode.replaceChild(pre, sources[i]);
+      }
+    });
+  })();
 
   (function () {
     var layer = document.createElement('div');
