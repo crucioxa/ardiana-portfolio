@@ -158,6 +158,30 @@
   }
   .nav-links a { text-decoration: none; transition: color 0.15s; }
   .nav-links a:hover, .nav-links a:focus-visible { color: var(--gold); }
+  .nav-links { align-items: center; }
+  .nav-links a.nav-cv {
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-weight: 600;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-links a.nav-cv:hover, .nav-links a.nav-cv:focus-visible { background: var(--gold); color: #2b0e1c; }
+  .nav-cv .short { display: none; }
+  .nav-links a { white-space: nowrap; }
+
+  /* phones: name + CV on the first row, section links on the row below */
+  @media (max-width: 720px) {
+    .nav-inner { flex-wrap: wrap; justify-content: flex-start; gap: 8px 18px; padding: 12px 16px; }
+    .nav-inner .name { order: 0; flex: 1 1 auto; }
+    .nav-links { display: contents; font-size: 13px; }
+    .nav-links a.nav-cv { order: 1; padding: 4px 14px; }
+    .nav-inner::after { content: ""; order: 2; flex-basis: 100%; height: 0; }   /* line break after the CV button */
+    .nav-links a:not(.nav-cv) { order: 3; }
+    .nav-cv .full { display: none; }
+    .nav-cv .short { display: inline; }
+  }
 
   /* ---------- hero ---------- */
   .hero {
@@ -916,6 +940,7 @@
       <a href="#education">Education</a>
       <a href="#toolkit">Skills</a>
       <a href="#contact">Contact</a>
+      <a class="nav-cv" href="files/Ardiana_Fejzullahu_CV.pdf?v=2026-11-19" target="_blank" rel="noopener"><span class="full">Open CV</span><span class="short">CV</span></a>
     </div>
   </div>
 </nav>
@@ -1173,7 +1198,7 @@
       <div class="contact-links">
         <a class="btn btn-primary" href="mailto:ardianafej@gmail.com">Email me</a>
         <a class="btn btn-ghost" href="https://www.linkedin.com/in/ardiana-fejzullahu" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn btn-ghost" href="files/Ardiana_Fejzullahu_CV.pdf" target="_blank" rel="noopener">Open CV</a>
+        <a class="btn btn-ghost" href="files/Ardiana_Fejzullahu_CV.pdf?v=2026-11-19" target="_blank" rel="noopener">Open CV</a>
       </div>
     </div>
   </section>
