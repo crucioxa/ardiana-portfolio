@@ -291,7 +291,7 @@
     position: relative;
     z-index: 1;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 26px;
   }
   @media (max-width: 800px) {
@@ -877,6 +877,29 @@
   .tok-str { color: #ffd38a; }
   .tok-num { color: #ffb38a; }
   .tok-com { color: #8a7186; font-style: italic; }
+
+  /* before / after cards */
+  .code-card.then-now .code-tag { color: var(--teal); }
+  .code-step {
+    display: block;
+    margin: 18px 0 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .code-step.today { color: var(--gold); }
+  .code-card .code-why {
+    margin: 0 0 4px;
+    padding: 12px 14px;
+    border-left: 3px solid var(--gold);
+    background: rgba(255,95,162,0.06);
+    border-radius: 0 6px 6px 0;
+    color: var(--text);
+  }
+  .code-card.then-now pre.then { opacity: 0.85; }
 </style>
 </head>
 <body>
@@ -922,7 +945,7 @@
   <section id="work" class="divider">
     <div class="section-head">
       <h2>Projects</h2>
-      <span class="count">6 projects · 2024–2026</span>
+      <span class="count">4 projects · 2024–2026</span>
     </div>
 
     <div class="map">
@@ -943,6 +966,7 @@
           </div>
         </a>
 
+  <template class="hidden-project" data-project="village-patch"><!-- hidden from the site; remove the template tags to bring it back -->
         <!-- Level 02 -->
         <a class="level-card" href="#/project/village-patch">
           <span class="level-num">2026 · IN PROGRESS</span>
@@ -957,6 +981,7 @@
             <span class="level-link">View project →</span>
           </div>
         </a>
+  </template>
 
         <!-- Level 03 -->
         <a class="level-card" href="#/project/colosseum">
@@ -965,14 +990,15 @@
             <img src="images/colosseum/cover.jpg" alt="Colosseum dungeon screenshot" loading="lazy">
           </div>
           <div class="level-title">Colosseum</div>
-          <div class="level-genre">Level Design · VFX · Gameplay Programming</div>
-          <div class="level-desc">2D combat platformer with a three-phase boss fight. I did the level design and the VFX, including the slash attack and torch fire.</div>
+          <div class="level-genre">Gameplay Programming · Level Design · VFX</div>
+          <div class="level-desc">2D combat platformer with a three-phase boss fight. I programmed the combat loop, where sword hits build essence that powers a fireball, and did level design and VFX.</div>
           <div class="level-meta">
             <span class="level-stack">Unity · C#</span>
             <span class="level-link">View project →</span>
           </div>
         </a>
 
+  <template class="hidden-project" data-project="left-behind"><!-- hidden from the site; remove the template tags to bring it back -->
         <!-- Level 04 -->
         <a class="level-card" href="#/project/left-behind">
           <span class="level-num">2025</span>
@@ -987,6 +1013,7 @@
             <span class="level-link">View project →</span>
           </div>
         </a>
+  </template>
 
         <!-- Level 05 -->
         <a class="level-card" href="#/project/hearthstone">
@@ -996,7 +1023,7 @@
           </div>
           <div class="level-title">Hearthstone Recreation</div>
           <div class="level-genre">Gameplay Programming · Game Design · Perforce · Scrum</div>
-          <div class="level-desc">A card battler rebuilt from scratch by a team of 30+. I programmed most of the gameplay, and we organized the team with Scrum.</div>
+          <div class="level-desc">A card battler rebuilt from scratch by a team of 30+. I programmed most of the gameplay, including the turn system, combat and an AI opponent.</div>
           <div class="level-meta">
             <span class="level-stack">Unity · C#</span>
             <span class="level-link">View project →</span>
@@ -1347,10 +1374,11 @@
     </div>
     <div class="project-nav">
       <span class="spacer">‹ Prev</span>
-      <a href="#/project/village-patch">Village Patch ›</a>
+      <a href="#/project/colosseum">Colosseum ›</a>
     </div>
   </section>
 
+  <template class="hidden-project" data-project="village-patch"><!-- hidden from the site; remove the template tags to bring it back -->
   <!-- Village Patch -->
   <section class="project-page" data-project="village-patch">
     <a class="back-link" href="#work">← All projects</a>
@@ -1376,6 +1404,7 @@
       <a href="#/project/colosseum">Colosseum ›</a>
     </div>
   </section>
+  </template>
 
   <!-- Colosseum -->
   <section class="project-page" data-project="colosseum">
@@ -1383,26 +1412,113 @@
     <div class="project-head">
       <span class="level-num">2025</span>
       <h2>Colosseum</h2>
-      <div class="level-genre">Level Design · VFX · Gameplay Programming</div>
+      <div class="level-genre">Gameplay Programming · Level Design · VFX</div>
     </div>
     <div class="level-art large">
       <img src="images/colosseum/cover.jpg" alt="Colosseum dungeon screenshot" loading="lazy">
     </div>
     <div class="project-body">
-      <p>Colosseum is a 2D combat platformer where you must defeat a boss with three unique and entertaining phases. The player faces challenging AI combat and has to maneuver through harsh terrain to win. It's a fun, quick, chaotic 2D platformer where anything is possible.</p>
-      <p>For this game my main roles were <span class="hl">level design</span> and <span class="hl">VFX artist</span>, a school project I worked on with five others over four weeks. I created the slash attack on the character and the fire effect on the torches using VFX graphs in Unity. I learned a lot about VFX on this project, and it pushed me out of my comfort zone of programming to do something more daring.</p>
-      <p>I also had a great time designing the starting scene: the tunnels of the Colosseum where fighters gear up before entering the arena. I only had about a week to make this scene and still managed to execute it well. Every prop was placed with intention and a clear design purpose in mind.</p>
+      <p>Colosseum is a 2D combat platformer where you must defeat a boss with three unique and entertaining phases. The player faces challenging AI combat and has to jump, dash and dodge to survive. It's a fun, quick and chaotic 2D platformer.</p>
+      <p>A school project I made with five others over four weeks, where I worked on <span class="hl">gameplay programming</span>, <span class="hl">level design</span> and <span class="hl">VFX</span>. I programmed the combat loop, designed the opening tunnels of the Colosseum, and created the slash and fire effects. The VFX work pushed me out of my comfort zone of programming to try something more daring.</p>
     </div>
+    <div class="contribution-detail">
+      <h3>My Contribution</h3>
+
+      <div class="contribution-group">
+        <h4>Gameplay Programming</h4>
+        <ul>
+          <li>Programmed the <span class="hl">combat loop</span>: sword hits damage the boss and charge an essence meter, and the essence powers a fireball spell.</li>
+          <li>Built the essence system, the fireball spell and breakable barrels that give essence and play randomized hit sounds.</li>
+        </ul>
+
+        <div class="code-highlights">
+          <h5>Code highlights</h5>
+          <p class="code-intro">A few of the functions I wrote, lightly trimmed for reading.</p>
+
+          <article class="code-card">
+            <header>
+              <span class="code-fn">EssenceSystem.GainEssence() / TrySpendEssence()</span>
+              <span class="code-tag">Essence</span>
+            </header>
+            <p>The essence system owns its meter: gaining or spending essence always updates the visuals, so no other script has to remember to do it.</p>
+<script type="text/plain" class="code-src">public void GainEssence(int amount)
+{
+    essenceContainer = Mathf.Min(essenceContainer + amount, maxEssence);
+    EssenceVisuals();                                 // the meter always stays in sync
+}
+
+public bool TrySpendEssence(int cost)
+{
+    if (essenceContainer < cost) return false;        // not enough essence
+
+    essenceContainer -= cost;
+    EssenceVisuals();
+    return true;
+}</script>
+          </article>
+
+          <article class="code-card">
+            <header>
+              <span class="code-fn">DealDamage.OnTriggerEnter()</span>
+              <span class="code-tag">Combat</span>
+            </header>
+            <p>Sword hits damage the boss and charge essence. Barrels give essence too, so players can charge up between boss attacks.</p>
+<script type="text/plain" class="code-src">public void OnTriggerEnter(Collider other)
+{
+    if (other.CompareTag("Enemy") && other.name == "Cboss")
+    {
+        boss.TakeDmg(damage);                         // sword hit damages the boss
+        essenceSystem.GainEssence(essenceGained);
+    }
+    else if (other.CompareTag("Barrel"))              // barrels charge essence too
+    {
+        essenceSystem.GainEssence(essenceGained);
+    }
+}</script>
+          </article>
+
+          <article class="code-card">
+            <header>
+              <span class="code-fn">SpellCast.Update()</span>
+              <span class="code-tag">Fireball spell</span>
+            </header>
+            <p>Pressing X spends essence to cast a fireball in the direction the player is facing. If there isn't enough essence, nothing happens.</p>
+<script type="text/plain" class="code-src">void Update()
+{
+    if (!Input.GetKeyDown(KeyCode.X) || isPlaying) return;
+    if (!essence.TrySpendEssence(essenceCost)) return;   // pays for the spell, or stops here
+
+    isThrowing = true;                                    // drives the throw animation
+    isPlaying = true;                                     // no casting again until this one finishes
+    SpellCastDirection();
+
+    if (P_AnimationController.facingRight) StartCoroutine(CastSpellRight());
+    else                                  StartCoroutine(CastSpellLeft());
+}</script>
+          </article>
+        </div>
+      </div>
+
+      <div class="contribution-group">
+        <h4>Level Design &amp; VFX</h4>
+        <ul>
+          <li>Designed the opening scene in about a week: the tunnels where fighters gear up before entering the arena, with every prop placed with a clear design purpose.</li>
+          <li>Created the sword slash and torch fire effects with Unity's <span class="hl">VFX Graph</span>.</li>
+        </ul>
+      </div>
+    </div>
+
     <div class="project-gallery">
       <img src="images/colosseum/1.jpg" alt="Colosseum weapon rack" loading="lazy">
       <img src="images/colosseum/2.jpg" alt="Colosseum armory shields and helmets" loading="lazy">
     </div>
     <div class="project-nav">
-      <a href="#/project/village-patch">‹ Village Patch</a>
-      <a href="#/project/left-behind">Left Behind ›</a>
+      <a href="#/project/diver-game">‹ Diver Game</a>
+      <a href="#/project/hearthstone">Hearthstone Recreation ›</a>
     </div>
   </section>
 
+  <template class="hidden-project" data-project="left-behind"><!-- hidden from the site; remove the template tags to bring it back -->
   <!-- Left Behind -->
   <section class="project-page" data-project="left-behind">
     <a class="back-link" href="#work">← All projects</a>
@@ -1428,6 +1544,7 @@
       <a href="#/project/hearthstone">Hearthstone Recreation ›</a>
     </div>
   </section>
+  </template>
 
   <!-- Hearthstone -->
   <section class="project-page" data-project="hearthstone">
@@ -1441,16 +1558,156 @@
       <img src="images/hearthstone/cover.jpg" alt="Hearthstone recreation screenshot" loading="lazy">
     </div>
     <div class="project-body">
-      <p>This was a school project where we recreated the game Hearthstone from scratch. The main focus was learning to work in a large group. We were over 30 students on one team.</p>
-      <p>This project came with its challenges. It was difficult at first to properly communicate with my group members, especially since it was the first project in a group this large. To overcome that, we started using <span class="hl">Scrum</span>, an agile project management framework, which helped us organize and assign tasks with ease.</p>
-      <p>Although the main goal was teamwork and agile project management, I learned a lot of <span class="hl">gameplay programming</span> through this project. I did the majority of the gameplay solo, which taught me who to trust with what, and how to adapt when things don't go the way they were planned.</p>
+      <p>A school project where we recreated the card game Hearthstone from scratch, with a team of more than 30 students.</p>
+      <p>I did the majority of the <span class="hl">gameplay programming</span> myself: the turn system, mana, drawing and playing cards, combat and the AI opponent. The other focus was teamwork in a large group. Communicating was hard at first, so we started using <span class="hl">Scrum</span> to organize and assign tasks, and I learned who to trust with what and how to adapt when plans changed.</p>
     </div>
+    <div class="contribution-detail">
+      <h3>My Contribution</h3>
+
+      <div class="contribution-group">
+        <h4>Gameplay Programming</h4>
+        <ul>
+          <li>Programmed most of the gameplay: turns and the turn timer, mana, drawing and playing cards, summoning sickness and combat.</li>
+          <li>Built the <span class="hl">AI opponent</span>, which plays the strongest card it can afford and decides each turn whether to attack minions or the player.</li>
+        </ul>
+
+        <div class="code-highlights">
+          <h5>Code highlights</h5>
+          <p class="code-intro">A few of the functions I wrote, lightly trimmed for reading.</p>
+
+          <article class="code-card then-now">
+            <header>
+              <span class="code-fn">AiGameManager.PlayCard()</span>
+              <span class="code-tag">AI · then &amp; today</span>
+            </header>
+            <p>How the AI chooses which card to play, and how I would write it today.</p>
+
+            <span class="code-step">Then (2024)</span>
+<script type="text/plain" class="code-src" data-variant="then">public void PlayCard()
+{
+    if (onHandCards.Count > 0 && minionsOnArena.Count < 7)
+    {
+        CardDeck randCard = onHandCards[Random.Range(0, onHandCards.Count)];
+
+        if (randCard.aiCanCast)
+        {
+            randCard.changeLook = true;
+            randCard.transform.SetParent(combatZone);
+            randCard.isPlaced = true;
+            randCard.currentHealth = randCard.cardData.healthPoints;
+            manaSystem.enemyMana -= randCard.cardData.manaCost;
+            randCard.gameObject.SetActive(true);
+            randCard.aiIsSummonSick = 1;
+            randCard.summonAiSprite.SetActive(true);
+
+            minionsOnArena.Add(randCard);
+            onHandCards.Remove(randCard);
+        }
+    }
+}</script>
+
+            <span class="code-step">What was wrong</span>
+            <p class="code-why">The AI picked one random card. If it couldn't afford that card, it played nothing that turn, even when it was holding other cards it could afford.</p>
+
+            <span class="code-step today">Today</span>
+<script type="text/plain" class="code-src">public void PlayCard()
+{
+    if (minionsOnArena.Count >= 7) return;                          // board is full
+
+    CardDeck best = null;
+    foreach (CardDeck card in onHandCards)                         // find the strongest card it can afford
+    {
+        if (card.cardData.manaCost > manaSystem.enemyMana) continue;
+        if (best == null || card.cardData.manaCost > best.cardData.manaCost)
+            best = card;
+    }
+    if (best == null) return;                                       // nothing affordable this turn
+
+    manaSystem.enemyMana -= best.cardData.manaCost;
+    best.currentHealth = best.cardData.healthPoints;
+    best.transform.SetParent(combatZone);
+    best.changeLook = true;                                         // flip the card face up
+    best.aiIsSummonSick = 1;                                        // can't attack until next turn
+    best.summonAiSprite.SetActive(true);
+
+    onHandCards.Remove(best);
+    minionsOnArena.Add(best);
+}</script>
+          </article>
+
+          <article class="code-card">
+            <header>
+              <span class="code-fn">AiGameManager.CheckIfCanAttack()</span>
+              <span class="code-tag">AI</span>
+            </header>
+            <p>Each AI minion that is ready either attacks a random player minion or goes for the player directly. If the player has no minions, it always attacks the player. Then the turn passes back. Looking back at this code, I found a crash when a minion died during its own attack. Looping over a copy of the list fixes it.</p>
+<script type="text/plain" class="code-src">public IEnumerator CheckIfCanAttack()
+{
+    if (gameStateSystem.gameState != GameState.ENEMYTURN) yield break;
+
+    foreach (CardDeck aiCard in new List<CardDeck>(minionsOnArena))   // copy: cards can die mid-loop
+    {
+        if (aiCard.aiIsSummonSick != 2) continue;                     // just summoned: can't attack yet
+
+        bool playerHasMinions = gameManager.minionsOnArena.Count > 0;
+
+        if (playerHasMinions && Random.Range(0, 2) == 0)              // 50%: attack a minion
+        {
+            var target = gameManager.minionsOnArena[Random.Range(0, gameManager.minionsOnArena.Count)];
+            StartCoroutine(aiCard.Attack(target.cardDisplay, target));
+            yield return new WaitForSeconds(1f);
+        }
+        else                                                          // otherwise go for the player
+        {
+            healthSystem.reduceHealth(false, aiCard.cardData.attackPoints);
+        }
+    }
+    gameStateSystem.ChangeTurn();
+}</script>
+          </article>
+
+          <article class="code-card">
+            <header>
+              <span class="code-fn">Combat.Attack()</span>
+              <span class="code-tag">Combat</span>
+            </header>
+            <p>Both cards deal damage to each other at the same time. Damage numbers pop up, health updates, and any card that drops to 0 goes to the discard pile.</p>
+<script type="text/plain" class="code-src">public IEnumerator Attack(CardDisplay defenderDisplay, CardDeck defender)
+{
+    ShowDamage(defender.cardData.attackPoints, card.cardData.attackPoints);   // "-3" popups
+    yield return new WaitForSeconds(0.5f);
+    HideDamage();
+
+    card.currentHealth     -= defender.cardData.attackPoints;   // both cards hit each other
+    defender.currentHealth -= card.cardData.attackPoints;
+
+    cardDisplay.healthText.text     = card.currentHealth.ToString();
+    defenderDisplay.healthText.text = defender.currentHealth.ToString();
+
+    if (defender.currentHealth <= 0) Discard(defender, aiGameManager);
+    if (card.currentHealth <= 0)     Discard(card, gameManager);
+}</script>
+          </article>
+        </div>
+      </div>
+
+      <div class="contribution-group">
+        <h4>Teamwork</h4>
+        <ul>
+          <li>Worked in a team of <span class="hl">30+</span> students, my first project in a group this large.</li>
+          <li>Used <span class="hl">Scrum</span> to organize and assign tasks once communication across the team became a challenge.</li>
+          <li>Used <span class="hl">Perforce</span> for version control across the whole team.</li>
+        </ul>
+      </div>
+    </div>
+
     <div class="project-gallery">
-      <img src="images/hearthstone/1.jpg" alt="Hearthstone full game board" loading="lazy">
+      <img src="images/hearthstone/1.jpg"
+ alt="Hearthstone full game board" loading="lazy">
       <img src="images/hearthstone/2.jpg" alt="Hearthstone victory screen" loading="lazy">
     </div>
     <div class="project-nav">
-      <a href="#/project/left-behind">‹ Left Behind</a>
+      <a href="#/project/colosseum">‹ Colosseum</a>
       <a href="#/project/toadally-lit">Toadally Lit ›</a>
     </div>
   </section>
@@ -1471,6 +1728,118 @@
       <p>This was my <span class="hl">first ever project</span> working in Unity with C#. I did the majority of the gameplay programming and level design, and it was my first introduction to Unity. It's a great way to see how far I've come: a game like this, which took me and three teammates about four weeks to make, would today probably take me a week to do solo, if even that.</p>
       <p>Looking back, I see plenty of faults in it, but I'm also proud of how far I've come in such a short time. This project was made a little under two years ago, and I'm excited to look back at my current projects one day and feel the same way.</p>
     </div>
+    <div class="contribution-detail">
+      <h3>My Contribution</h3>
+
+      <div class="contribution-group">
+        <h4>Gameplay Programming</h4>
+        <ul>
+          <li>Programmed most of the gameplay: frog movement and jumping, fall damage, hearts and respawning, collecting fireflies and the moving lily pads.</li>
+          <li>Scripted the level events: the door that opens after three fireflies, the spikes, and the dialogue when you reach your friend.</li>
+        </ul>
+
+        <div class="code-highlights">
+          <h5>Code highlights</h5>
+          <p class="code-intro">A few of the functions I wrote, lightly trimmed for reading.</p>
+
+          <article class="code-card">
+            <header>
+              <span class="code-fn">MovingPads.FixedUpdate()</span>
+              <span class="code-tag">Moving platforms</span>
+            </header>
+            <p>The lily pads glide back and forth, and while the frog stands on one it moves along with the pad instead of sliding off.</p>
+<script type="text/plain" class="code-src">void FixedUpdate()
+{
+    // glide back and forth between the start and end point
+    Vector3 nextPosition = Vector3.Lerp(startPos, endPos, Mathf.PingPong(Time.time * speed, 1f));
+    lilypad.MovePosition(nextPosition);
+
+    if (player != null)                                   // frog is standing on the pad
+    {
+        Vector3 platformDelta = nextPosition - previousPosition;
+        player.transform.position += platformDelta;       // carry the frog along
+    }
+
+    previousPosition = nextPosition;
+}</script>
+          </article>
+
+          <article class="code-card">
+            <header>
+              <span class="code-fn">Fall damage (from CharacterScript.Update)</span>
+              <span class="code-tag">Player</span>
+            </header>
+            <p>The game measures how long the frog has been falling. Landing after too long a fall costs a heart, which is part of what makes the game deceptively difficult.</p>
+<script type="text/plain" class="code-src">if (charCont.velocity.y < 0)                 // falling: count how long
+{
+    fallTime += Time.deltaTime;
+    hasFallen = true;
+}
+else if (hasFallen)                          // just landed
+{
+    if (fallTime > 1.35f)                    // fell too far: lose a heart
+        Death();
+
+    hasFallen = false;
+    fallTime = 0;
+}</script>
+          </article>
+
+          <article class="code-card then-now">
+            <header>
+              <span class="code-fn">CharacterScript.Death()</span>
+              <span class="code-tag">Then &amp; today</span>
+            </header>
+            <p>Losing a heart, and how I would write it today.</p>
+
+            <span class="code-step">Then (2024)</span>
+<script type="text/plain" class="code-src" data-variant="then">public void Death()
+{
+    hp--;
+    audioSource.PlayOneShot(damageAudio, 0.8f);
+
+    switch (hp)
+    {
+        case 0:
+            heart1.sprite = brokenHeart;
+            heart2.sprite = brokenHeart;
+            heart3.sprite = brokenHeart;
+            SceneManager.LoadScene("DeathScreen");
+            break;
+        case 1:
+            heart2.sprite = brokenHeart;
+            heart3.sprite = brokenHeart;
+            transform.position = respawnPoint;
+            break;
+        case 2:
+            heart3.sprite = brokenHeart;
+            transform.position = respawnPoint;
+            break;
+    }
+}</script>
+
+            <span class="code-step">What was wrong</span>
+            <p class="code-why">Every heart was set by hand, once per case. Adding a fourth heart would mean rewriting the whole switch, and the respawn line is repeated.</p>
+
+            <span class="code-step today">Today</span>
+<script type="text/plain" class="code-src">[SerializeField] SpriteRenderer[] hearts;           // any number of hearts, set in the Inspector
+
+public void Death()
+{
+    hp--;
+    audioSource.PlayOneShot(damageAudio, 0.8f);
+
+    for (int i = hp; i < hearts.Length; i++)       // break every heart above the current hp
+        hearts[i].sprite = brokenHeart;
+
+    if (hp <= 0) SceneManager.LoadScene("DeathScreen");
+    else         transform.position = respawnPoint;
+}</script>
+          </article>
+        </div>
+      </div>
+    </div>
+
     <div class="project-gallery">
       <img src="images/toadally-lit/1.jpg" alt="Toadally Lit platforming screenshot" loading="lazy">
       <img src="images/toadally-lit/2.jpg" alt="Toadally Lit boss dialogue screenshot" loading="lazy">
@@ -1610,6 +1979,7 @@
       var sources = document.querySelectorAll('script.code-src');
       for (var i = 0; i < sources.length; i++) {
         var pre = document.createElement('pre');
+        if (sources[i].dataset.variant) pre.className = sources[i].dataset.variant;   // e.g. 'then'
         var code = document.createElement('code');
         code.innerHTML = highlight(sources[i].textContent);
         pre.appendChild(code);
